@@ -2,23 +2,15 @@ import "./App.css";
 import { useRecoilState } from "recoil";
 import Board from "./components/Board.tsx";
 import { BoardsAtom } from "./state/Board.ts";
+import { createBoard } from "./useCases/board/createBoard.ts";
+import { storeBoard } from "./useCases/board/storeBoard.ts";
 
 function App() {
   const [boards, setBoards] = useRecoilState(BoardsAtom);
 
   const addBoard = () => {
-    console.log("add board");
-    setBoards((prev) => [
-      ...prev,
-      {
-        id: crypto.randomUUID(),
-        title: "Board " + (prev.length + 1),
-        cards: [],
-        color: "#fff",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ]);
+    const newBoard = createBoard({});
+    storeBoard(setBoards, newBoard);
   };
 
   return (
