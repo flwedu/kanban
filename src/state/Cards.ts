@@ -14,4 +14,14 @@ export const CardSelectorById = selectorFamily<CardType | undefined, string>({
 			const cards = get(CardsAtom);
 			return cards.find((card) => card.id === id);
 		},
+	set:
+		(id) =>
+		({ get, set }, newValue) => {
+			const cards = get(CardsAtom);
+			const index = cards.findIndex((card) => card.id === id);
+			if (index === -1) return;
+			const newCards = [...cards];
+			newCards[index] = { ...newCards[index], ...newValue };
+			set(CardsAtom, newCards);
+		},
 });

@@ -19,7 +19,7 @@ function App() {
 	return (
 		<Main>
 			{boards.map((board, order) => {
-				return <Board key={board.id} board={board} order={order} />;
+				return <Board key={board.id} id={board.id} order={order} />;
 			})}
 			<EmptyBoard>
 				<Button onClick={addBoard}>

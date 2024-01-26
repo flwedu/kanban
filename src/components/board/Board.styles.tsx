@@ -4,10 +4,11 @@ import { Bordered } from "../common/Bordered.styles.tsx";
 export const StyledBoard = styled.div`
 	${Bordered};
 
-	padding: 0 1rem;
+	padding: 0 1rem 1rem;
 	margin-bottom: 16px;
-	min-height: 30rem;
+	height: 30rem;
 	width: ${({ theme }) => theme.spacing["64"]};
+	overflow: hidden;
 `;
 
 export const BoardHeader = styled.div`
@@ -18,8 +19,26 @@ export const BoardHeader = styled.div`
 	border-bottom: solid 1px ${({ theme }) => theme.colors.gray["500"]};
 	height: ${({ theme }) => theme.spacing["12"]};
 
-	h2 {
+	h2,
+	input {
 		font-size: ${({ theme }) => theme.fontSize["lg"]};
+		font-weight: 500;
+	}
+
+	input {
+		width: 100%;
+		border: none;
+	}
+
+	& [data-hidden-without-hover] {
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.25s;
+	}
+
+	&:hover [data-hidden-without-hover] {
+		opacity: 1;
+		pointer-events: auto;
 	}
 `;
 
@@ -28,4 +47,6 @@ export const BoardBody = styled.div`
 	flex-direction: column;
 	gap: ${({ theme }) => theme.spacing["4"]};
 	height: 100%;
+	margin-bottom: 1rem;
+	overflow-y: auto;
 `;

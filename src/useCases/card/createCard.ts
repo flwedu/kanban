@@ -15,6 +15,6 @@ export function createCard(data: Partial<CardType>): CardType {
 		updatedAt: data.updatedAt ?? new Date(),
 		description: data.description ?? "",
 		tags: data.tags ?? {},
-		title: data.title ?? "",
+		title: data.title ?? "New Card",
 	};
 }

@@ -15,7 +15,7 @@ describe("createCard", () => {
 			updatedAt: expect.any(Date),
 			description: "",
 			tags: {},
-			title: "",
+			title: "New Card",
 		});
 	});
 

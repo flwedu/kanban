@@ -14,6 +14,20 @@ export const BoardSelectorById = selectorFamily<BoardType | undefined, string>({
 			const boards = get(BoardsAtom);
 			return boards.find((board) => board.id === id);
 		},
+	set:
+		(id) =>
+		({ get, set }, newValue) => {
+			const boards = get(BoardsAtom);
+			const index = boards.findIndex((board) => board.id === id);
+			if (index === -1) {
+				const newBoards = [...boards, newValue] as BoardType[];
+				set(BoardsAtom, newBoards);
+				return;
+			}
+			const newBoards = [...boards];
+			newBoards[index] = { ...newBoards[index], ...newValue };
+			set(BoardsAtom, newBoards);
+		},
 });
 
 export const BoardCardsSelectorById = selectorFamily<string[], string>({
