@@ -1,6 +1,7 @@
 import { NotepadText, Tags } from "lucide-react";
 import React from "react";
 import { useRecoilState } from "recoil";
+import { useCardDrag } from "../../hooks/useCardDrag.ts";
 import { CardSelectorById } from "../../state/Cards.ts";
 import { Button } from "../common/Button.styles.tsx";
 import { CardBody, CardHeader, StyledCard } from "./Card.styles.tsx";
@@ -10,9 +11,10 @@ type CardProps = {
 	order: number;
 };
 
-export default function Card({ id }: CardProps) {
+export default function Card({ id, order }: CardProps) {
 	const [editingHeader, setEditingHeader] = React.useState(false);
 	const [card, setCard] = useRecoilState(CardSelectorById(id));
+	const [{ opacity, boxShadow }, dragRef] = useCardDrag({ card, order });
 
 	if (!card) {
 		return null;
@@ -33,7 +35,7 @@ export default function Card({ id }: CardProps) {
 	};
 
 	return (
-		<StyledCard>
+		<StyledCard style={{ opacity, boxShadow }} ref={dragRef}>
 			<CardHeader>
 				{editingHeader ? (
 					<textarea defaultValue={card.title} onBlur={onHeaderInputBlur} autoFocus />

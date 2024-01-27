@@ -1,6 +1,7 @@
 import { Plus } from "lucide-react";
 import React from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import { useCardDrop } from "../../hooks/useCardDrop.ts";
 import { BoardType } from "../../interface/Board.ts";
 import { BoardSelectorById } from "../../state/Board.ts";
 import { CardsAtom } from "../../state/Cards.ts";
@@ -19,6 +20,7 @@ export default function Board({ id }: BoardProps) {
 	const [editing, setEditing] = React.useState(false);
 	const setCards = useSetRecoilState(CardsAtom);
 	const [board, setBoard] = useRecoilState(BoardSelectorById(id));
+	useCardDrop({ boardId: board?.id ?? "" });
 
 	if (!board) {
 		return null;
