@@ -8,6 +8,7 @@ import { CardsAtom } from "../../state/Cards.ts";
 import { createCard } from "../../useCases/card/createCard.ts";
 import { storeCard } from "../../useCases/card/storeCard.ts";
 import Card from "../card/Card.tsx";
+import { DropLocation } from "../droppable/DropLocation.tsx";
 import { Button } from "../common/Button.styles.tsx";
 import { BoardBody, BoardHeader, StyledBoard } from "./Board.styles.tsx";
 
@@ -20,7 +21,7 @@ export default function Board({ id }: BoardProps) {
 	const [editing, setEditing] = React.useState(false);
 	const setCards = useSetRecoilState(CardsAtom);
 	const [board, setBoard] = useRecoilState(BoardSelectorById(id));
-	useCardDrop({ boardId: board?.id ?? "" });
+	const [, dropRef] = useCardDrop({ boardId: id, order: -1 });
 
 	if (!board) {
 		return null;
@@ -43,7 +44,7 @@ export default function Board({ id }: BoardProps) {
 	};
 
 	return (
-		<StyledBoard>
+		<StyledBoard ref={dropRef}>
 			<BoardHeader>
 				{editing ? (
 					<input type="text" defaultValue={board.title} onBlur={onHeaderInputBlur} autoFocus />
@@ -55,8 +56,14 @@ export default function Board({ id }: BoardProps) {
 				</Button>
 			</BoardHeader>
 			<BoardBody>
+				<DropLocation key={0} boardId={id} order={0} />
 				{board.cards.map((cardId, order) => {
-					return <Card key={cardId} id={cardId} order={order} />;
+					return (
+						<>
+							<Card key={cardId} id={cardId} order={order} />
+							<DropLocation key={order + 1} boardId={id} order={order + 1} />
+						</>
+					);
 				})}
 			</BoardBody>
 		</StyledBoard>

@@ -9,6 +9,11 @@ export const StyledCard = styled.div`
 	display: flex;
 	flex-direction: column;
 
+	&.dragging {
+		opacity: 0.5;
+		box-shadow: none;
+	}
+
 	& [data-hidden-without-hover] {
 		opacity: 0;
 		pointer-events: none;

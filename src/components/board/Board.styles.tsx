@@ -45,7 +45,8 @@ export const BoardHeader = styled.div`
 export const BoardBody = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: ${({ theme }) => theme.spacing["4"]};
+	justify-content: flex-start;
+	gap: ${({ theme }) => theme.spacing["1"]};
 	height: 100%;
 	margin-bottom: 1rem;
 	overflow-y: auto;

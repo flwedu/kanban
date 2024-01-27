@@ -14,7 +14,7 @@ type CardProps = {
 export default function Card({ id, order }: CardProps) {
 	const [editingHeader, setEditingHeader] = React.useState(false);
 	const [card, setCard] = useRecoilState(CardSelectorById(id));
-	const [{ opacity, boxShadow }, dragRef] = useCardDrag({ card, order });
+	const [{ isDragging }, dragRef] = useCardDrag({ card, order });
 
 	if (!card) {
 		return null;
@@ -35,7 +35,7 @@ export default function Card({ id, order }: CardProps) {
 	};
 
 	return (
-		<StyledCard style={{ opacity, boxShadow }} ref={dragRef}>
+		<StyledCard className={isDragging ? "dragging" : undefined} ref={dragRef}>
 			<CardHeader>
 				{editingHeader ? (
 					<textarea defaultValue={card.title} onBlur={onHeaderInputBlur} autoFocus />
