@@ -45,7 +45,7 @@ export default function Board({ id }: BoardProps) {
 
 	return (
 		<StyledBoard ref={dropRef}>
-			<BoardHeader>
+			<BoardHeader $color={board.color}>
 				{editing ? (
 					<input type="text" defaultValue={board.title} onBlur={onHeaderInputBlur} autoFocus />
 				) : (

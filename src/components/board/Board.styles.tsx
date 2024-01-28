@@ -1,7 +1,9 @@
 import { styled } from "styled-components";
 import { Bordered } from "../common/Bordered.styles.tsx";
 
-export const StyledBoard = styled.div`
+export const StyledBoard = styled.div<{
+	$color?: string;
+}>`
 	${Bordered};
 
 	padding: 0 1rem 1rem;
@@ -11,7 +13,9 @@ export const StyledBoard = styled.div`
 	overflow: hidden;
 `;
 
-export const BoardHeader = styled.div`
+export const BoardHeader = styled.div<{
+	$color?: string;
+}>`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -23,11 +27,10 @@ export const BoardHeader = styled.div`
 	input {
 		font-size: ${({ theme }) => theme.fontSize["lg"]};
 		font-weight: 500;
-	}
-
-	input {
+		background-color: ${({ $color }) => $color ?? "transparent"};
+		border-radius: ${({ theme }) => theme.borderRadius["md"]};
+		padding: 0 ${({ theme }) => theme.spacing["2"]};
 		width: 100%;
-		border: none;
 	}
 
 	& [data-hidden-without-hover] {

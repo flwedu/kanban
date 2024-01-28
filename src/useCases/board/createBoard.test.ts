@@ -24,7 +24,7 @@ describe("createBoard", () => {
 		const board = createBoard(data);
 		expect(board).toMatchObject({
 			id: expect.any(String),
-			color: undefined,
+			color: expect.any(String),
 			cards: [],
 			createdAt: expect.any(Date),
 			title: "New Board",
