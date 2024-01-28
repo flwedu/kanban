@@ -9,8 +9,11 @@ export const StyledBoard = styled.div<{
 	padding: 0 1rem 1rem;
 	margin-bottom: 16px;
 	height: 30rem;
-	width: ${({ theme }) => theme.spacing["64"]};
+	width: 100%;
+	flex: 0 0 ${({ theme }) => theme.spacing["72"]};
 	overflow: hidden;
+	display: flex;
+	flex-direction: column;
 `;
 
 export const BoardHeader = styled.div<{
@@ -21,7 +24,11 @@ export const BoardHeader = styled.div<{
 	align-items: center;
 	margin-bottom: 1rem;
 	border-bottom: solid 1px ${({ theme }) => theme.colors.gray["500"]};
+	width: 100%;
 	height: ${({ theme }) => theme.spacing["12"]};
+	flex: 1 0 ${({ theme }) => theme.spacing["12"]};
+	order: 1;
+	gap: ${({ theme }) => theme.spacing["2"]};
 
 	h2,
 	input {
@@ -51,6 +58,8 @@ export const BoardBody = styled.div`
 	justify-content: flex-start;
 	gap: ${({ theme }) => theme.spacing["1"]};
 	height: 100%;
+	width: 100%;
 	margin-bottom: 1rem;
 	overflow-y: auto;
+	order: 2;
 `;

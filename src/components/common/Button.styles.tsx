@@ -15,6 +15,9 @@ export const Button = styled.button<{
 	background-color: ${({ theme }) => theme.colors.gray["800"]};
 	cursor: pointer;
 	transition: border-color 0.25s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
 	&:focus,
 	&:focus-visible {

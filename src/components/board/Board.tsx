@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { Plus, Settings } from 'lucide-react'
 import React from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useCardDrop } from "../../hooks/useCardDrop.ts";
@@ -21,10 +21,16 @@ export default function Board({ id }: BoardProps) {
 	const [editing, setEditing] = React.useState(false);
 	const setCards = useSetRecoilState(CardsAtom);
 	const [board, setBoard] = useRecoilState(BoardSelectorById(id));
-	const [, dropRef] = useCardDrop({ boardId: id, order: -1 });
+	const [, dropRef] = useCardDrop({
+		dropInfoGetter: () => ({ boardId: id, newOrder: -1 }),
+	});
 
 	if (!board) {
 		return null;
+	}
+
+	const openSettings = () => {
+		console.log("open settings");
 	}
 
 	const addCard = () => {
@@ -51,11 +57,14 @@ export default function Board({ id }: BoardProps) {
 				) : (
 					<h2 onClick={() => setEditing(true)}>{board.title}</h2>
 				)}
-				<Button onClick={addCard} $size="sm" data-hidden-without-hover>
-					<Plus size={16} />
+				<Button onClick={openSettings} $size="sm" data-hidden-without-hover>
+					<Settings size={16} />
 				</Button>
 			</BoardHeader>
 			<BoardBody>
+				<Button onClick={addCard} $size="md">
+					<Plus size={16} /> Add card
+				</Button>
 				<DropLocation key={0} boardId={id} order={0} />
 				{board.cards.map((cardId, order) => {
 					return (
