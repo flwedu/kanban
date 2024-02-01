@@ -1,4 +1,4 @@
-import { Plus, Settings } from 'lucide-react'
+import { Plus, Settings } from "lucide-react";
 import React from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useCardDrop } from "../../hooks/useCardDrop.ts";
@@ -11,6 +11,7 @@ import Card from "../card/Card.tsx";
 import { DropLocation } from "../droppable/DropLocation.tsx";
 import { Button } from "../common/Button.styles.tsx";
 import { BoardBody, BoardHeader, StyledBoard } from "./Board.styles.tsx";
+import { useModalState } from "../../hooks/useModalState.ts";
 
 type BoardProps = {
 	id: BoardType["id"];
@@ -19,6 +20,7 @@ type BoardProps = {
 
 export default function Board({ id }: BoardProps) {
 	const [editing, setEditing] = React.useState(false);
+	const { open } = useModalState("board");
 	const setCards = useSetRecoilState(CardsAtom);
 	const [board, setBoard] = useRecoilState(BoardSelectorById(id));
 	const [, dropRef] = useCardDrop({
@@ -29,9 +31,9 @@ export default function Board({ id }: BoardProps) {
 		return null;
 	}
 
-	const openSettings = () => {
-		console.log("open settings");
-	}
+	const onClickSettings = () => {
+		open(id);
+	};
 
 	const addCard = () => {
 		const newCard = createCard({ boardId: id });
@@ -57,7 +59,7 @@ export default function Board({ id }: BoardProps) {
 				) : (
 					<h2 onClick={() => setEditing(true)}>{board.title}</h2>
 				)}
-				<Button onClick={openSettings} $size="sm" data-hidden-without-hover>
+				<Button onClick={onClickSettings} $size="sm" data-hidden-without-hover>
 					<Settings size={16} />
 				</Button>
 			</BoardHeader>

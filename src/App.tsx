@@ -9,6 +9,7 @@ import { useCardDrop } from "./hooks/useCardDrop.ts";
 import { BoardsAtom } from "./state/Board.ts";
 import { createBoard } from "./useCases/board/createBoard.ts";
 import { storeBoard } from "./useCases/board/storeBoard.ts";
+import { BoardConfigModal } from "./components/modals/BoardConfig.tsx";
 
 function App() {
 	const [boards, setBoards] = useRecoilState(BoardsAtom);
@@ -32,12 +33,15 @@ function App() {
 		);
 
 	return (
-		<Main>
-			{boards.map((board, order) => {
-				return <Board key={board.id} id={board.id} order={order} />;
-			})}
-			<EmptyBoard ref={dropRef}>{Content}</EmptyBoard>
-		</Main>
+		<>
+			<Main>
+				{boards.map((board, order) => {
+					return <Board key={board.id} id={board.id} order={order} />;
+				})}
+				<EmptyBoard ref={dropRef}>{Content}</EmptyBoard>
+			</Main>
+			<BoardConfigModal />
+		</>
 	);
 }
 
