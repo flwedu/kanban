@@ -12,7 +12,7 @@ export const Button = styled.button<{
 	font-size: 1em;
 	font-weight: 500;
 	font-family: inherit;
-	background-color: ${({ theme }) => theme.colors.gray["800"]};
+	background-color: ${({ theme, color }) => color ?? theme.colors.gray["800"]};
 	cursor: pointer;
 	transition: border-color 0.25s;
 	display: flex;

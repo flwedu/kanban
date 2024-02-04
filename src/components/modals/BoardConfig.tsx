@@ -1,9 +1,17 @@
-import { useRecoilState } from "recoil";
-import { Button } from "../../components/common/Button.styles";
-import { useModalState } from "../../hooks/useModalState";
 import { useRef } from "react";
+import { useRecoilState } from "recoil";
+import { useModalState } from "../../hooks/useModalState";
 import { BoardSelectorById } from "../../state/Board";
-import { StyledModal, StyledModalContent, StyledModalFooter, StyledModalHeader } from "./Modal.styles";
+import { Button } from "../common/Button.styles.tsx";
+import { ColorPicker } from "../common/ColorPicker.tsx";
+import { FormRow, Label } from "../common/Form.styles.tsx";
+import {
+	StyledModal,
+	StyledModalContent,
+	StyledModalFooter,
+	StyledModalHeader,
+	StyledModalWrapper,
+} from "./Modal.styles";
 
 export function BoardConfigModal() {
 	const { isOpen, dataId, close } = useModalState("board");
@@ -11,7 +19,7 @@ export function BoardConfigModal() {
 	const formRef = useRef<HTMLFormElement>(null);
 
 	const onClickSave = () => {
-		if (!formRef.current) return;
+		if (!formRef?.current) return;
 		const formData = new FormData(formRef.current);
 		const color = formData.get("color");
 		if (!boardState) return;
@@ -31,23 +39,24 @@ export function BoardConfigModal() {
 	if (!isOpen) return null;
 
 	return (
-		<StyledModal>
-			<StyledModalHeader>
-				<h3>Board Configuration</h3>
-			</StyledModalHeader>
-			<StyledModalContent>
-				<form ref={formRef}>
-					<input type="color" name="color" defaultValue={boardState?.color}></input>
-				</form>
-			</StyledModalContent>
-			<StyledModalFooter>
-				<Button onClick={onClickSave}>
-					Save
-				</Button>
-				<Button onClick={onClickCancel}>
-					Cancel
-				</Button>
-			</StyledModalFooter>
-		</StyledModal>
+		<StyledModalWrapper>
+			<StyledModal>
+				<StyledModalHeader>
+					<h3>Board Configuration</h3>
+				</StyledModalHeader>
+				<StyledModalContent>
+					<form ref={formRef}>
+						<FormRow>
+							<Label htmlFor="color">Board color:</Label>
+							<ColorPicker name="color" defaultValue={boardState?.color} />
+						</FormRow>
+					</form>
+				</StyledModalContent>
+				<StyledModalFooter>
+					<Button onClick={onClickSave}>Save</Button>
+					<Button onClick={onClickCancel}>Cancel</Button>
+				</StyledModalFooter>
+			</StyledModal>
+		</StyledModalWrapper>
 	);
 }

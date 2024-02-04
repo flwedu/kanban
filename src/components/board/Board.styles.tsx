@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { getContrastYIQ } from "../../utils/getContrastYIQ.ts";
 import { Bordered } from "../common/Bordered.styles.tsx";
 
 export const StyledBoard = styled.div<{
@@ -29,6 +30,7 @@ export const BoardHeader = styled.div<{
 	flex: 1 0 ${({ theme }) => theme.spacing["12"]};
 	order: 1;
 	gap: ${({ theme }) => theme.spacing["2"]};
+	color: ${({ $color }) => getContrastYIQ($color ?? "#FFF")};
 
 	h2,
 	input {
@@ -38,6 +40,7 @@ export const BoardHeader = styled.div<{
 		border-radius: ${({ theme }) => theme.borderRadius["md"]};
 		padding: 0 ${({ theme }) => theme.spacing["2"]};
 		width: 100%;
+		color: inherit;
 	}
 
 	& [data-hidden-without-hover] {
