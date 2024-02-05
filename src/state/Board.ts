@@ -1,9 +1,11 @@
 import { atom, selectorFamily } from "recoil";
 import { BoardType } from "../interface/Board.ts";
+import persistAtom from "./persist.ts";
 
 export const BoardsAtom = atom<BoardType[]>({
 	key: "BoardsAtom",
 	default: [],
+	effects_UNSTABLE: [persistAtom],
 });
 
 export const BoardSelectorById = selectorFamily<BoardType | undefined, string>({

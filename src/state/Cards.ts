@@ -1,9 +1,11 @@
 import { atom, selectorFamily } from "recoil";
 import { CardType } from "../interface/Card.ts";
+import persistAtom from "./persist.ts";
 
 export const CardsAtom = atom<CardType[]>({
 	key: "CardsAtom",
 	default: [],
+	effects_UNSTABLE: [persistAtom],
 });
 
 export const CardSelectorById = selectorFamily<CardType | undefined, string>({
