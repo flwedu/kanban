@@ -3,7 +3,8 @@ import { Bordered } from "../common/Bordered.styles.tsx";
 
 export const StyledCard = styled.div`
 	${Bordered};
-	flex: 0 1 ${({ theme }) => theme.spacing["16"]};
+	background-color: ${({ theme }) => theme.colors.container[1]};
+	flex: 0 1 ${({ theme }) => theme.spacing.md};
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -30,11 +31,11 @@ export const CardHeader = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	flex: 1 1 ${({ theme }) => theme.spacing["12"]};
+	flex: 1 1 ${({ theme }) => theme.spacing.base};
 	padding: 0.5rem 1rem;
 	width: 100%;
 	height: 100%;
-	gap: ${({ theme }) => theme.spacing["2"]};
+	gap: ${({ theme }) => theme.spacing.sm};
 
 	h3 {
 		text-overflow: ellipsis;
@@ -66,7 +67,7 @@ export const CardBody = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	flex: 1 1 ${({ theme }) => theme.spacing["4"]};
+	flex: 1 1 ${({ theme }) => theme.spacing.md};
 	padding: 0.5rem 1rem;
 
 	div {

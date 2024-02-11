@@ -9,10 +9,10 @@ type ColorPickerProps = {
 };
 
 export function ColorPicker({ defaultValue, name }: ColorPickerProps) {
-	const [color, setColor] = useState(defaultValue);
+	const [bgColor, setBgColor] = useState(defaultValue);
 	const ref = useRef<HTMLInputElement>(null);
 
-	const textColor = getContrastYIQ(color ?? "#FFF");
+	const textColor = getContrastYIQ(bgColor ?? "#ffffff");
 
 	const onClickButton = () => {
 		if (!ref.current) return;
@@ -20,12 +20,12 @@ export function ColorPicker({ defaultValue, name }: ColorPickerProps) {
 	};
 
 	const onChangeColor = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setColor(e.target.value);
+		setBgColor(e.target.value);
 	};
 
 	return (
 		<>
-			<Button type="button" onClick={onClickButton} $shape="rounded" color={color}>
+			<Button type="button" onClick={onClickButton} $shape="rounded" bgColor={bgColor}>
 				<Palette color={textColor} />
 			</Button>
 			<input

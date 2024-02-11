@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const Label = styled.label`
 	display: block;
-	margin-bottom: ${({ theme }) => theme.spacing["2"]};
+	margin-bottom: ${({ theme }) => theme.spacing.md};
 	font-size: ${({ theme }) => theme.fontSize["base"]};
 	font-weight: 500;
 `;
@@ -10,7 +10,7 @@ export const Label = styled.label`
 export const FormRow = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin-bottom: ${({ theme }) => theme.spacing["4"]};
+	margin-bottom: ${({ theme }) => theme.spacing.md};
 	justify-content: start;
 	align-content: start;
 	margin-inline: auto;
@@ -18,8 +18,8 @@ export const FormRow = styled.div`
 `;
 
 export const Input = styled.input`
-	padding: ${({ theme }) => theme.spacing["2"]};
+	padding: ${({ theme }) => theme.spacing.sm};
 	border-radius: ${({ theme }) => theme.borderRadius["md"]};
-	border: 1px solid ${({ theme }) => theme.colors["blueGray"]["300"]};
-	background-color: ${({ theme }) => theme.colors["blueGray"]["100"]};
+	border: 1px solid ${({ theme }) => theme.colors.outline};
+	background-color: ${({ theme }) => theme.colors.container[0]};
 `;

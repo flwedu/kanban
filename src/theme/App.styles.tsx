@@ -10,10 +10,6 @@ export const GlobalStyles = createGlobalStyle`
 		line-height: 1.5;
 		font-weight: 400;
 
-		color-scheme: light dark;
-		color: ${({ theme }) => theme.colors.coolGray["50"]};
-		background-color: ${({ theme }) => theme.colors.gray["900"]};
-
 		font-synthesis: none;
 		text-rendering: optimizeLegibility;
 		-webkit-font-smoothing: antialiased;
@@ -43,18 +39,12 @@ export const GlobalStyles = createGlobalStyle`
 		place-items: center;
 		min-width: 320px;
 		min-height: 100vh;
+		background-color: ${({ theme }) => theme.colors.background};
+		color: ${({ theme }) => theme.colors.text};
 	}
 
 	h1 {
 		font-size: 3.2em;
 		line-height: 1.1;
 	}
-
-	@media (prefers-color-scheme: light) {
-		:root {
-			color: ${({ theme }) => theme.colors.gray["900"]};
-			background-color: ${({ theme }) => theme.colors.coolGray["50"]};
-		}
-	}
-
 `;

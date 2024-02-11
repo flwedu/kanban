@@ -53,8 +53,8 @@ export function BoardConfigModal() {
 					</form>
 				</StyledModalContent>
 				<StyledModalFooter>
-					<Button onClick={onClickSave}>Save</Button>
-					<Button onClick={onClickCancel}>Cancel</Button>
+					<Button success onClick={onClickSave}>Save</Button>
+					<Button danger onClick={onClickCancel}>Cancel</Button>
 				</StyledModalFooter>
 			</StyledModal>
 		</StyledModalWrapper>

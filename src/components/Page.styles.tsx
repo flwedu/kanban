@@ -5,6 +5,6 @@ export const Main = styled.main`
 	flex-direction: row;
 	justify-content: flex-start;
 	align-items: flex-start;
-	padding: ${({ theme }) => theme.spacing["2"]};
-	gap: ${({ theme }) => theme.spacing["4"]};
+	padding: ${({ theme }) => theme.spacing.sm};
+	gap: ${({ theme }) => theme.spacing.md};
 `;

@@ -30,5 +30,8 @@
 		{
 			"path": "./tsconfig.node.json"
 		}
+	],
+	"files": [
+		"./src/interface/styled.d.ts"
 	]
 }

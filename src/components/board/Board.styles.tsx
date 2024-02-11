@@ -11,10 +11,11 @@ export const StyledBoard = styled.div<{
 	margin-bottom: 16px;
 	height: 30rem;
 	width: 100%;
-	flex: 0 0 ${({ theme }) => theme.spacing["72"]};
+	flex: 0 0 23rem;
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
+	background-color: ${({ theme }) => theme.colors.container[0]};
 `;
 
 export const BoardHeader = styled.div<{
@@ -24,13 +25,13 @@ export const BoardHeader = styled.div<{
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 1rem;
-	border-bottom: solid 1px ${({ theme }) => theme.colors.gray["500"]};
+	border-bottom: solid 1px ${({ theme }) => theme.colors.outline};
 	width: 100%;
-	height: ${({ theme }) => theme.spacing["12"]};
-	flex: 1 0 ${({ theme }) => theme.spacing["12"]};
+	height: 3rem;
+	flex: 1 0 3rem;
 	order: 1;
-	gap: ${({ theme }) => theme.spacing["2"]};
-	color: ${({ $color }) => getContrastYIQ($color ?? "#FFF")};
+	gap: ${({ theme }) => theme.spacing.lg};
+	color: ${({ $color }) => getContrastYIQ($color ?? "#ffffff")};
 
 	h2,
 	input {
@@ -38,7 +39,7 @@ export const BoardHeader = styled.div<{
 		font-weight: 500;
 		background-color: ${({ $color }) => $color ?? "transparent"};
 		border-radius: ${({ theme }) => theme.borderRadius["md"]};
-		padding: 0 ${({ theme }) => theme.spacing["2"]};
+		padding: 0 ${({ theme }) => theme.spacing.sm};
 		width: 100%;
 		color: inherit;
 	}
@@ -59,7 +60,7 @@ export const BoardBody = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
-	gap: ${({ theme }) => theme.spacing["1"]};
+	gap: ${({ theme }) => theme.spacing.sm};
 	height: 100%;
 	width: 100%;
 	margin-bottom: 1rem;

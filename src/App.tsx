@@ -1,15 +1,18 @@
 import { Plus } from "lucide-react";
 import { useRecoilState } from "recoil";
+import { ThemeProvider } from "styled-components";
 import Board from "./components/board/Board.tsx";
 import { EmptyBoard } from "./components/board/EmptyBoard.tsx";
 import { Button } from "./components/common/Button.styles.tsx";
 import { StyledDropLocation } from "./components/droppable/DropLocation.styles.tsx";
+import { BoardConfigModal } from "./components/modals/BoardConfig.tsx";
 import { Main } from "./components/Page.styles.tsx";
 import { useCardDrop } from "./hooks/useCardDrop.ts";
 import { BoardsAtom } from "./state/Board.ts";
+import { GlobalStyles } from "./theme/App.styles.tsx";
+import { lightTheme } from "./theme/light.ts";
 import { createBoard } from "./useCases/board/createBoard.ts";
 import { storeBoard } from "./useCases/board/storeBoard.ts";
-import { BoardConfigModal } from "./components/modals/BoardConfig.tsx";
 
 function App() {
 	const [boards, setBoards] = useRecoilState(BoardsAtom);
@@ -33,7 +36,8 @@ function App() {
 		);
 
 	return (
-		<>
+		<ThemeProvider theme={lightTheme}>
+			<GlobalStyles />
 			<Main>
 				{boards.map((board, order) => {
 					return <Board key={board.id} id={board.id} order={order} />;
@@ -41,7 +45,7 @@ function App() {
 				<EmptyBoard ref={dropRef}>{Content}</EmptyBoard>
 			</Main>
 			<BoardConfigModal />
-		</>
+		</ThemeProvider>
 	);
 }
 

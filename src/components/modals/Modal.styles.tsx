@@ -15,8 +15,8 @@ export const StyledModalWrapper = styled.div`
 export const StyledModal = styled.div`
 	border-radius: ${({ theme }) => theme.borderRadius["md"]};
 	width: 400px;
-	background-color: ${({ theme }) => theme.colors["blueGray"]["800"]};
-	padding: ${({ theme }) => theme.spacing["4"]};
+	background-color: ${({ theme }) => theme.colors.container[0]};
+	padding: ${({ theme }) => theme.spacing.md};
 `;
 
 export const StyledModalHeader = styled.div``;
@@ -26,6 +26,6 @@ export const StyledModalContent = styled.div``;
 export const StyledModalFooter = styled.div`
 	display: flex;
 	justify-content: flex-end;
-	padding: ${({ theme }) => theme.spacing["4"]};
-	gap: ${({ theme }) => theme.spacing["4"]};
+	padding: ${({ theme }) => theme.spacing.md};
+	gap: ${({ theme }) => theme.spacing.md};
 `;

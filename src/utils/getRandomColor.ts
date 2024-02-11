@@ -1,6 +1,6 @@
-import { theme } from "../theme/theme.ts";
+import { colorsRef } from "../theme/colorsRef.ts";
 
-const availableColors = theme.colors;
+const availableColors = colorsRef.colors;
 const colorEntries = Object.entries(availableColors).filter(([key]) => key !== "white" && key !== "black");
 
 export function getRandomColor() {
