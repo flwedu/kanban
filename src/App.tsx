@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import ReactSwitch from "react-switch";
 import { useRecoilState } from "recoil";
 import { ThemeProvider } from "styled-components";
 import Board from "./components/board/Board.tsx";
@@ -6,15 +7,18 @@ import { EmptyBoard } from "./components/board/EmptyBoard.tsx";
 import { Button } from "./components/common/Button.styles.tsx";
 import { StyledDropLocation } from "./components/droppable/DropLocation.styles.tsx";
 import { BoardConfigModal } from "./components/modals/BoardConfig.tsx";
-import { Main } from "./components/Page.styles.tsx";
+import { Header, Main } from "./components/Page.styles.tsx";
 import { useCardDrop } from "./hooks/useCardDrop.ts";
 import { BoardsAtom } from "./state/Board.ts";
+import { configsAtom } from "./state/Configs.ts";
 import { GlobalStyles } from "./theme/App.styles.tsx";
+import { darkTheme } from "./theme/dark.ts";
 import { lightTheme } from "./theme/light.ts";
 import { createBoard } from "./useCases/board/createBoard.ts";
 import { storeBoard } from "./useCases/board/storeBoard.ts";
 
 function App() {
+	const [configs, setConfigs] = useRecoilState(configsAtom);
 	const [boards, setBoards] = useRecoilState(BoardsAtom);
 	const [{ isOver, canDrop }, dropRef] = useCardDrop({
 		dropInfoGetter: addBoard,
@@ -24,6 +28,16 @@ function App() {
 		const newBoard = createBoard({});
 		storeBoard(setBoards, newBoard);
 		return { boardId: newBoard.id, newOrder: -1 };
+	}
+
+	function onThemeChange() {
+		setConfigs((prev) => {
+			const newTheme = !prev.darkMode;
+			return {
+				...prev,
+				darkMode: newTheme,
+			};
+		});
 	}
 
 	const Content =
@@ -36,8 +50,12 @@ function App() {
 		);
 
 	return (
-		<ThemeProvider theme={lightTheme}>
+		<ThemeProvider theme={configs.darkMode ? darkTheme : lightTheme}>
 			<GlobalStyles />
+			<Header>
+				<h1>Kanban Board 🗒</h1>
+				<ReactSwitch checked={configs.darkMode} onChange={onThemeChange} />
+			</Header>
 			<Main>
 				{boards.map((board, order) => {
 					return <Board key={board.id} id={board.id} order={order} />;

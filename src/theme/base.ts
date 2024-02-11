@@ -20,13 +20,13 @@ export const baseTheme: Omit<AppThemeInterface, "colors" | "title"> = {
 		none: "none",
 	},
 	fontSize: {
-		xs: "0.75rem",
+		xs: "0.5rem",
 		sm: "0.875rem",
 		base: "1rem",
-		lg: "1.125rem",
-		xl: "1.25rem",
-		"2xl": "1.5rem",
-		"3xl": "1.875rem",
+		lg: "1.5rem",
+		xl: "1.875rem",
+		"2xl": "2rem",
+		"3xl": "2.5rem",
 	},
 	screens: {
 		sm: "640px",

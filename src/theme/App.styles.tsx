@@ -16,13 +16,6 @@ export const GlobalStyles = createGlobalStyle`
 		-moz-osx-font-smoothing: grayscale;
 	}
 
-	#root {
-		max-width: 1280px;
-		margin: 0 auto;
-		padding: 2rem;
-		text-align: center;
-	}
-
 	a {
 		font-weight: 500;
 		color: #646cff;
@@ -33,12 +26,16 @@ export const GlobalStyles = createGlobalStyle`
 		color: #535bf2;
 	}
 
+	#root {
+		margin: 0;
+		width: 100vw;
+		height: 100vh
+	}
+
 	body {
 		margin: 0;
 		display: flex;
-		place-items: center;
-		min-width: 320px;
-		min-height: 100vh;
+		place-items: start;
 		background-color: ${({ theme }) => theme.colors.background};
 		color: ${({ theme }) => theme.colors.text};
 	}
