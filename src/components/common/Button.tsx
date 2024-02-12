@@ -8,21 +8,35 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	danger?: boolean;
 	disabled?: boolean;
 	fade?: boolean;
+	height?: number;
+	secondary?: boolean;
 	shape?: "rounded" | "pill";
 	size?: "sm" | "md" | "lg";
 	success?: boolean;
+	width?: number;
 }
 
-export function Button({ children, success, danger, disabled, buttonColor, ...props }: PropsWithChildren<ButtonProps>) {
+export function Button({
+	children,
+	success,
+	danger,
+	disabled,
+	buttonColor,
+	secondary,
+	type = "button",
+	...props
+}: PropsWithChildren<ButtonProps>) {
 	const { colors, pureColors } = useTheme();
 
 	const initialBgColor = buttonColor
 		? buttonColor
-		: success
-			? colors.success
-			: danger
-				? colors.danger
-				: colors.primary;
+		: secondary
+			? colors.secondary
+			: success
+				? colors.success
+				: danger
+					? colors.danger
+					: colors.primary;
 	const backgroundColor = disabled ? opacify(0.8, initialBgColor) : initialBgColor;
 	const borderColor = lighten(0.05, backgroundColor);
 	const textColor = readableColor(backgroundColor, pureColors.darkText, pureColors.lightText);
@@ -30,6 +44,7 @@ export function Button({ children, success, danger, disabled, buttonColor, ...pr
 	return (
 		<StyledButton
 			{...props}
+			type={type}
 			style={{
 				backgroundColor,
 				borderColor,

@@ -1,4 +1,4 @@
-import { Palette } from "lucide-react";
+import { Palette, Square } from "lucide-react";
 import React, { useRef, useState } from "react";
 import { Button } from "./Button.tsx";
 
@@ -21,8 +21,10 @@ export function ColorPicker({ defaultValue, name }: ColorPickerProps) {
 
 	return (
 		<>
-			<Button type="button" onClick={onClickButton} shape="rounded" buttonColor={bgColor}>
+			<Button onClick={onClickButton}>
 				<Palette />
+				Update board color
+				<Square fill={bgColor} color={bgColor} />
 			</Button>
 			<input
 				type="color"

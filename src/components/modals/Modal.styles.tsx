@@ -16,7 +16,7 @@ export const StyledModal = styled.div`
 	border-radius: ${({ theme }) => theme.borderRadius["md"]};
 	width: 400px;
 	background-color: ${({ theme }) => theme.colors.container[0]};
-	padding: ${({ theme }) => theme.spacing.md};
+	padding: ${({ theme }) => theme.spacing.lg};
 `;
 
 export const StyledModalHeader = styled.div``;

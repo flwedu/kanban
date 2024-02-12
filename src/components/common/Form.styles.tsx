@@ -14,7 +14,6 @@ export const FormRow = styled.div`
 	justify-content: start;
 	align-content: start;
 	margin-inline: auto;
-	max-width: 100px;
 `;
 
 export const Input = styled.input`

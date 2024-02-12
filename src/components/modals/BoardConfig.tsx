@@ -1,10 +1,11 @@
+import { Check, Trash, X } from "lucide-react";
 import { useRef } from "react";
 import { useRecoilState } from "recoil";
 import { useModalState } from "../../hooks/useModalState";
 import { BoardSelectorById } from "../../state/Board";
 import { Button } from "../common/Button.tsx";
 import { ColorPicker } from "../common/ColorPicker.tsx";
-import { FormRow, Label } from "../common/Form.styles.tsx";
+import { FormRow } from "../common/Form.styles.tsx";
 import {
 	StyledModal,
 	StyledModalContent,
@@ -13,7 +14,11 @@ import {
 	StyledModalWrapper,
 } from "./Modal.styles";
 
-export function BoardConfigModal() {
+interface BoardConfigModalProps {
+	onRemoveBoard: (boardId: string) => void;
+}
+
+export function BoardConfigModal({ onRemoveBoard }: BoardConfigModalProps) {
 	const { isOpen, dataId, close } = useModalState("board");
 	const [boardState, setBoardState] = useRecoilState(BoardSelectorById(dataId ?? ""));
 	const formRef = useRef<HTMLFormElement>(null);
@@ -32,6 +37,13 @@ export function BoardConfigModal() {
 		});
 		close();
 	};
+
+	const onClickRemove = () => {
+		if(!dataId) return;
+		onRemoveBoard(dataId);
+		close();
+	}
+
 	const onClickCancel = () => {
 		close();
 	};
@@ -47,16 +59,22 @@ export function BoardConfigModal() {
 				<StyledModalContent>
 					<form ref={formRef}>
 						<FormRow>
-							<Label htmlFor="color">Board color:</Label>
 							<ColorPicker name="color" defaultValue={boardState?.color} />
+						</FormRow>
+						<FormRow>
+							<Button danger onClick={onClickRemove}>
+								<Trash /> Remove Board
+							</Button>
 						</FormRow>
 					</form>
 				</StyledModalContent>
 				<StyledModalFooter>
 					<Button success onClick={onClickSave}>
+						<Check/>
 						Save
 					</Button>
-					<Button danger onClick={onClickCancel}>
+					<Button onClick={onClickCancel} secondary>
+						<X/>
 						Cancel
 					</Button>
 				</StyledModalFooter>

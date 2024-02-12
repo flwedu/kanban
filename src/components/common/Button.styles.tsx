@@ -2,7 +2,9 @@ import { css, styled } from "styled-components";
 import { Bordered } from "./Bordered.styles.tsx";
 import { ButtonProps } from "./Button.tsx";
 
-export const StyledButton = styled.button<Pick<ButtonProps, "shape" | "fade" | "size">>`
+interface StyledButtonProps extends Pick<ButtonProps, "shape" | "fade" | "size" | "width" | "height"> {}
+
+export const StyledButton = styled.button<StyledButtonProps>`
 	${Bordered};
 	padding: 0.6em 1.2em;
 	font-size: 1em;
@@ -14,6 +16,9 @@ export const StyledButton = styled.button<Pick<ButtonProps, "shape" | "fade" | "
 	align-items: center;
 	justify-content: center;
 	box-shadow: ${({ theme }) => theme.boxShadow.sm};
+	width: ${({ width }) => width ? `${width}px` : "unset"};
+	height: ${({ height }) => height ? `${height}px` : "unset"};
+	gap: 0.5rem;
 
 	&:focus,
 	&:focus-visible {

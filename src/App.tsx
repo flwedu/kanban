@@ -30,6 +30,10 @@ function App() {
 		return { boardId: newBoard.id, newOrder: -1 };
 	}
 
+	function removeBoard(id: string) {
+		setBoards(boards.filter(board => board.id !== id));
+	}
+
 	function onThemeChange(checked: boolean) {
 		setConfigs((prev) => {
 			return {
@@ -61,7 +65,7 @@ function App() {
 				})}
 				<EmptyBoard ref={dropRef}>{Content}</EmptyBoard>
 			</Main>
-			<BoardConfigModal />
+			<BoardConfigModal onRemoveBoard={removeBoard} />
 		</ThemeProvider>
 	);
 }
