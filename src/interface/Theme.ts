@@ -1,18 +1,16 @@
 export type AppThemeColors = {
-	primary: string;
-	secondary: string;
-	text: string;
 	background: string;
 	container: [string, string, string];
-	textAccent: string;
-	outline: string;
-	success: string;
 	danger: string;
-}
+	outline: string;
+	primary: string;
+	secondary: string;
+	success: string;
+	text: string;
+	textAccent: string;
+};
 
 export interface AppThemeInterface {
-	title: string;
-	colors: AppThemeColors;
 	borderRadius: {
 		none: string;
 		sm: string;
@@ -31,6 +29,11 @@ export interface AppThemeInterface {
 		inner: string;
 		none: string;
 	};
+	colors: AppThemeColors;
+	fontFamily: {
+		body: string;
+		title: string;
+	};
 	fontSize: {
 		xs: string;
 		sm: string;
@@ -39,6 +42,12 @@ export interface AppThemeInterface {
 		xl: string;
 		"2xl": string;
 		"3xl": string;
+	};
+	pureColors: {
+		black: string;
+		darkText: string;
+		lightText: string;
+		white: string;
 	};
 	screens: {
 		sm: string;
@@ -55,5 +64,6 @@ export interface AppThemeInterface {
 		lg: string;
 		xl: string;
 		"2xl": string;
-	}
+	};
+	title: string;
 }

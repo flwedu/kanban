@@ -19,6 +19,10 @@ export const baseTheme: Omit<AppThemeInterface, "colors" | "title"> = {
 		inner: "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
 		none: "none",
 	},
+	fontFamily: {
+		title: "'Poppins', sans-serif",
+		body: "'Inter', sans-serif",
+	},
 	fontSize: {
 		xs: "0.5rem",
 		sm: "0.875rem",
@@ -27,6 +31,12 @@ export const baseTheme: Omit<AppThemeInterface, "colors" | "title"> = {
 		xl: "1.875rem",
 		"2xl": "2rem",
 		"3xl": "2.5rem",
+	},
+	pureColors: {
+		black: "#000000",
+		white: "#FFF",
+		darkText: "#EEEEEE",
+		lightText: "#202020",
 	},
 	screens: {
 		sm: "640px",

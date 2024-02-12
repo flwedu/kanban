@@ -13,6 +13,7 @@ export const Header = styled.nav`
 
 	h1 {
 		font-size: ${({ theme }) => theme.fontSize["3xl"]};
+		font-family: ${({ theme }) => theme.fontFamily.title};
 		line-height: 1rem;
 	}
 `;

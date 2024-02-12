@@ -1,5 +1,5 @@
+import { readableColor } from "polished";
 import { styled } from "styled-components";
-import { getContrastYIQ } from "../../utils/getContrastYIQ.ts";
 import { Bordered } from "../common/Bordered.styles.tsx";
 
 export const StyledBoard = styled.div<{
@@ -31,7 +31,7 @@ export const BoardHeader = styled.div<{
 	flex: 1 0 3rem;
 	order: 1;
 	gap: ${({ theme }) => theme.spacing.lg};
-	color: ${({ $color }) => getContrastYIQ($color ?? "#ffffff")};
+	color: ${({ $color, theme: { pureColors } }) => readableColor($color ?? pureColors.lightText, pureColors.darkText)};
 
 	h2,
 	input {

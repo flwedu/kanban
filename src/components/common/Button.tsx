@@ -14,7 +14,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export function Button({ children, success, danger, disabled, buttonColor, ...props }: PropsWithChildren<ButtonProps>) {
-	const { colors } = useTheme();
+	const { colors, pureColors } = useTheme();
 
 	const initialBgColor = buttonColor
 		? buttonColor
@@ -25,7 +25,7 @@ export function Button({ children, success, danger, disabled, buttonColor, ...pr
 				: colors.primary;
 	const backgroundColor = disabled ? opacify(0.8, initialBgColor) : initialBgColor;
 	const borderColor = lighten(0.05, backgroundColor);
-	const textColor = readableColor(backgroundColor, "#ffffff", "#000000");
+	const textColor = readableColor(backgroundColor, pureColors.darkText, pureColors.lightText);
 
 	return (
 		<StyledButton

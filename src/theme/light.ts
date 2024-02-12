@@ -4,15 +4,15 @@ import { baseTheme } from "./base.ts";
 export const lightTheme: AppThemeInterface = {
 	title: "light",
 	colors: {
-		background: "#f9fafb",
-		container: ["#e5e7eb", "#d1d5db", "#9ca3af"],
+		background: "#FCFCFC",
+		container: ["#F9F9F9", "#F0F0F0", "#E8E8E8"],
 		danger: "#be123c",
-		outline: "#374151",
-		primary: "#3E6990",
-		secondary: "#E9E3B4",
+		outline: "#BBBBBB",
+		primary: "#5B5BD6",
+		secondary: "#E0E0E0",
 		success: "#047857",
-		text: "#18181b",
-		textAccent: "#27272a",
+		text: "#202020",
+		textAccent: "#646464",
 	},
 	...baseTheme,
 };

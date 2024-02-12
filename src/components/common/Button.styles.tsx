@@ -13,10 +13,19 @@ export const StyledButton = styled.button<Pick<ButtonProps, "shape" | "fade" | "
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	box-shadow: ${({ theme }) => theme.boxShadow.sm};
 
 	&:focus,
 	&:focus-visible {
 		outline: 2px auto -webkit-focus-ring-color;
+	}
+
+	&:hover {
+		filter: brightness(110%);
+	}
+
+	&:active {
+		box-shadow: none;
 	}
 
 	${({ fade }) => {
