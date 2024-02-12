@@ -1,11 +1,11 @@
 import { Plus } from "lucide-react";
-import ReactSwitch from "react-switch";
 import { useRecoilState } from "recoil";
 import { ThemeProvider } from "styled-components";
 import Board from "./components/board/Board.tsx";
 import { EmptyBoard } from "./components/board/EmptyBoard.tsx";
 import { Button } from "./components/common/Button.tsx";
 import { StyledDropLocation } from "./components/droppable/DropLocation.styles.tsx";
+import { ThemeSwitch } from "./components/misc/ThemeSwitch.tsx";
 import { BoardConfigModal } from "./components/modals/BoardConfig.tsx";
 import { Header, Main } from "./components/Page.styles.tsx";
 import { useCardDrop } from "./hooks/useCardDrop.ts";
@@ -30,12 +30,11 @@ function App() {
 		return { boardId: newBoard.id, newOrder: -1 };
 	}
 
-	function onThemeChange() {
+	function onThemeChange(checked: boolean) {
 		setConfigs((prev) => {
-			const newTheme = !prev.darkMode;
 			return {
 				...prev,
-				darkMode: newTheme,
+				darkMode: checked,
 			};
 		});
 	}
@@ -54,7 +53,7 @@ function App() {
 			<GlobalStyles />
 			<Header>
 				<h1>Kanban Board 🗒</h1>
-				<ReactSwitch checked={configs.darkMode} onChange={onThemeChange} />
+				<ThemeSwitch checked={configs.darkMode} onChange={onThemeChange} />
 			</Header>
 			<Main>
 				{boards.map((board, order) => {
