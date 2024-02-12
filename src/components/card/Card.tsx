@@ -3,7 +3,7 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { useCardDrag } from "../../hooks/useCardDrag.ts";
 import { CardSelectorById } from "../../state/Cards.ts";
-import { Button } from "../common/Button.styles.tsx";
+import { Button } from "../common/Button.tsx";
 import { CardBody, CardHeader, StyledCard } from "./Card.styles.tsx";
 
 type CardProps = {
@@ -42,13 +42,13 @@ export default function Card({ id, order }: CardProps) {
 				) : (
 					<h3 onClick={() => setEditingHeader(true)}>{card.title}</h3>
 				)}
-				<Button $size={"sm"} $fade={!hasDescription}>
+				<Button size={"sm"} fade={!hasDescription}>
 					<NotepadText size={16} />
 				</Button>
 			</CardHeader>
 			<CardBody>
 				<div></div>
-				<Button $size={"sm"} $fade={!hasTags} data-hidden-without-hover>
+				<Button size={"sm"} fade={!hasTags} data-hidden-without-hover>
 					<Tags size={16} />
 				</Button>
 			</CardBody>

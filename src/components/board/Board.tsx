@@ -2,16 +2,16 @@ import { Plus, Settings } from "lucide-react";
 import React from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useCardDrop } from "../../hooks/useCardDrop.ts";
+import { useModalState } from "../../hooks/useModalState.ts";
 import { BoardType } from "../../interface/Board.ts";
 import { BoardSelectorById } from "../../state/Board.ts";
 import { CardsAtom } from "../../state/Cards.ts";
 import { createCard } from "../../useCases/card/createCard.ts";
 import { storeCard } from "../../useCases/card/storeCard.ts";
 import Card from "../card/Card.tsx";
+import { Button } from "../common/Button.tsx";
 import { DropLocation } from "../droppable/DropLocation.tsx";
-import { Button } from "../common/Button.styles.tsx";
 import { BoardBody, BoardHeader, StyledBoard } from "./Board.styles.tsx";
-import { useModalState } from "../../hooks/useModalState.ts";
 
 type BoardProps = {
 	id: BoardType["id"];
@@ -59,12 +59,12 @@ export default function Board({ id }: BoardProps) {
 				) : (
 					<h2 onClick={() => setEditing(true)}>{board.title}</h2>
 				)}
-				<Button onClick={onClickSettings} $size="sm" data-hidden-without-hover>
+				<Button onClick={onClickSettings} size="sm" data-hidden-without-hover>
 					<Settings size={16} />
 				</Button>
 			</BoardHeader>
 			<BoardBody>
-				<Button onClick={addCard} $size="md">
+				<Button onClick={addCard} size="md">
 					<Plus size={16} /> Add card
 				</Button>
 				<DropLocation key={0} boardId={id} order={0} />

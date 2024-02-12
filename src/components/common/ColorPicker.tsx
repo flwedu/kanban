@@ -1,7 +1,6 @@
 import { Palette } from "lucide-react";
 import React, { useRef, useState } from "react";
-import { getContrastYIQ } from "../../utils/getContrastYIQ.ts";
-import { Button } from "./Button.styles.tsx";
+import { Button } from "./Button.tsx";
 
 type ColorPickerProps = {
 	defaultValue?: string;
@@ -10,13 +9,10 @@ type ColorPickerProps = {
 
 export function ColorPicker({ defaultValue, name }: ColorPickerProps) {
 	const [bgColor, setBgColor] = useState(defaultValue);
-	const ref = useRef<HTMLInputElement>(null);
-
-	const textColor = getContrastYIQ(bgColor ?? "#ffffff");
+	const hiddenInputRef = useRef<HTMLInputElement>(null);
 
 	const onClickButton = () => {
-		if (!ref.current) return;
-		ref.current.click();
+		hiddenInputRef.current?.click();
 	};
 
 	const onChangeColor = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,15 +21,15 @@ export function ColorPicker({ defaultValue, name }: ColorPickerProps) {
 
 	return (
 		<>
-			<Button type="button" onClick={onClickButton} $shape="rounded" bgColor={bgColor}>
-				<Palette color={textColor} />
+			<Button type="button" onClick={onClickButton} shape="rounded" buttonColor={bgColor}>
+				<Palette />
 			</Button>
 			<input
 				type="color"
 				onChange={onChangeColor}
 				name={name}
 				defaultValue={defaultValue}
-				ref={ref}
+				ref={hiddenInputRef}
 				style={{ display: "none" }}
 			/>
 		</>

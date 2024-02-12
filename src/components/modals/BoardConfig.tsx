@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useRecoilState } from "recoil";
 import { useModalState } from "../../hooks/useModalState";
 import { BoardSelectorById } from "../../state/Board";
-import { Button } from "../common/Button.styles.tsx";
+import { Button } from "../common/Button.tsx";
 import { ColorPicker } from "../common/ColorPicker.tsx";
 import { FormRow, Label } from "../common/Form.styles.tsx";
 import {
@@ -53,8 +53,12 @@ export function BoardConfigModal() {
 					</form>
 				</StyledModalContent>
 				<StyledModalFooter>
-					<Button success onClick={onClickSave}>Save</Button>
-					<Button danger onClick={onClickCancel}>Cancel</Button>
+					<Button success onClick={onClickSave}>
+						Save
+					</Button>
+					<Button danger onClick={onClickCancel}>
+						Cancel
+					</Button>
 				</StyledModalFooter>
 			</StyledModal>
 		</StyledModalWrapper>

@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import { ThemeProvider } from "styled-components";
 import Board from "./components/board/Board.tsx";
 import { EmptyBoard } from "./components/board/EmptyBoard.tsx";
-import { Button } from "./components/common/Button.styles.tsx";
+import { Button } from "./components/common/Button.tsx";
 import { StyledDropLocation } from "./components/droppable/DropLocation.styles.tsx";
 import { BoardConfigModal } from "./components/modals/BoardConfig.tsx";
 import { Header, Main } from "./components/Page.styles.tsx";
@@ -44,7 +44,7 @@ function App() {
 		isOver && canDrop ? (
 			<StyledDropLocation className="hovering" />
 		) : (
-			<Button onClick={addBoard} $size="md">
+			<Button onClick={addBoard} size="md">
 				<Plus /> Add board
 			</Button>
 		);
