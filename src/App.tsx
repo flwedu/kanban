@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { Plus, Trash, X } from "lucide-react";
 import { useRecoilState } from "recoil";
 import { ThemeProvider } from "styled-components";
 import Board from "./components/board/Board.tsx";
@@ -8,30 +8,40 @@ import { StyledDropLocation } from "./components/droppable/DropLocation.styles.t
 import { ThemeSwitch } from "./components/misc/ThemeSwitch.tsx";
 import { BoardConfigModal } from "./components/modals/BoardConfig.tsx";
 import { Header, Main } from "./components/Page.styles.tsx";
+import { useBoards } from "./hooks/useBoards.ts";
 import { useCardDrop } from "./hooks/useCardDrop.ts";
-import { BoardsAtom } from "./state/Board.ts";
+import { useConfirmationModal } from "./hooks/useConfirmationModal.tsx";
 import { configsAtom } from "./state/Configs.ts";
 import { GlobalStyles } from "./theme/App.styles.tsx";
 import { darkTheme } from "./theme/dark.ts";
 import { lightTheme } from "./theme/light.ts";
-import { createBoard } from "./useCases/board/createBoard.ts";
-import { storeBoard } from "./useCases/board/storeBoard.ts";
 
 function App() {
 	const [configs, setConfigs] = useRecoilState(configsAtom);
-	const [boards, setBoards] = useRecoilState(BoardsAtom);
+	const [boards, { addBoard, deleteBoard }] = useBoards();
 	const [{ isOver, canDrop }, dropRef] = useCardDrop({
 		dropInfoGetter: addBoard,
 	});
-
-	function addBoard() {
-		const newBoard = createBoard({});
-		storeBoard(setBoards, newBoard);
-		return { boardId: newBoard.id, newOrder: -1 };
-	}
+	const [ConfirmModal, { showConfirmDialog }] = useConfirmationModal();
 
 	function removeBoard(id: string) {
-		setBoards(boards.filter(board => board.id !== id));
+		showConfirmDialog({
+			title: "Are you sure?",
+			message: "This action cannot be undone.",
+			okButton: (
+				<Button danger>
+					<Trash />
+					Remove
+				</Button>
+			),
+			cancelButton: (
+				<Button secondary>
+					<X />
+					Undo
+				</Button>
+			),
+			onClickOkButton: () => deleteBoard(id),
+		});
 	}
 
 	function onThemeChange(checked: boolean) {
@@ -55,8 +65,9 @@ function App() {
 	return (
 		<ThemeProvider theme={configs.darkMode ? darkTheme : lightTheme}>
 			<GlobalStyles />
+			<ConfirmModal />
 			<Header>
-				<h1>Kanban Board 🗒</h1>
+				<h1>Kanban Board</h1>
 				<ThemeSwitch checked={configs.darkMode} onChange={onThemeChange} />
 			</Header>
 			<Main>

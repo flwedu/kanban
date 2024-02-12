@@ -6,13 +6,7 @@ import { BoardSelectorById } from "../../state/Board";
 import { Button } from "../common/Button.tsx";
 import { ColorPicker } from "../common/ColorPicker.tsx";
 import { FormRow } from "../common/Form.styles.tsx";
-import {
-	StyledModal,
-	StyledModalContent,
-	StyledModalFooter,
-	StyledModalHeader,
-	StyledModalWrapper,
-} from "./Modal.styles";
+import { BaseModal } from "./BaseModal.tsx";
 
 interface BoardConfigModalProps {
 	onRemoveBoard: (boardId: string) => void;
@@ -39,10 +33,10 @@ export function BoardConfigModal({ onRemoveBoard }: BoardConfigModalProps) {
 	};
 
 	const onClickRemove = () => {
-		if(!dataId) return;
+		if (!dataId) return;
 		onRemoveBoard(dataId);
 		close();
-	}
+	};
 
 	const onClickCancel = () => {
 		close();
@@ -51,34 +45,30 @@ export function BoardConfigModal({ onRemoveBoard }: BoardConfigModalProps) {
 	if (!isOpen) return null;
 
 	return (
-		<StyledModalWrapper>
-			<StyledModal>
-				<StyledModalHeader>
-					<h3>Board Configuration</h3>
-				</StyledModalHeader>
-				<StyledModalContent>
-					<form ref={formRef}>
-						<FormRow>
-							<ColorPicker name="color" defaultValue={boardState?.color} />
-						</FormRow>
-						<FormRow>
-							<Button danger onClick={onClickRemove}>
-								<Trash /> Remove Board
-							</Button>
-						</FormRow>
-					</form>
-				</StyledModalContent>
-				<StyledModalFooter>
-					<Button success onClick={onClickSave}>
-						<Check/>
-						Save
+		<BaseModal
+			open={isOpen}
+			title="Board Configuration"
+			footerButtons={[
+				<Button success onClick={onClickSave}>
+					<Check />
+					Save
+				</Button>,
+				<Button onClick={onClickCancel} secondary>
+					<X />
+					Cancel
+				</Button>,
+			]}
+		>
+			<form ref={formRef}>
+				<FormRow>
+					<ColorPicker name="color" defaultValue={boardState?.color} />
+				</FormRow>
+				<FormRow>
+					<Button danger onClick={onClickRemove}>
+						<Trash /> Remove Board
 					</Button>
-					<Button onClick={onClickCancel} secondary>
-						<X/>
-						Cancel
-					</Button>
-				</StyledModalFooter>
-			</StyledModal>
-		</StyledModalWrapper>
+				</FormRow>
+			</form>
+		</BaseModal>
 	);
 }
