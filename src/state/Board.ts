@@ -1,10 +1,36 @@
 import { atom, selectorFamily } from "recoil";
 import { BoardType } from "../interface/Board.ts";
+import { colorsRef } from "../theme/colorsRef.ts";
 import persistAtom from "./persist.ts";
 
 export const BoardsAtom = atom<BoardType[]>({
 	key: "BoardsAtom",
-	default: [],
+	default: [
+		{
+			id: "TODO",
+			title: "TODO 📋",
+			cards: [],
+			createdAt: new Date(),
+			updatedAt: new Date(),
+			color: colorsRef["yellow"]["700"],
+		},
+		{
+			id: "DOING",
+			title: "Doing 👷",
+			cards: [],
+			createdAt: new Date(),
+			updatedAt: new Date(),
+			color: colorsRef["blue"]["800"],
+		},
+		{
+			id: "DONE",
+			title: "Done ✅",
+			cards: [],
+			createdAt: new Date(),
+			updatedAt: new Date(),
+			color: colorsRef["emerald"]["800"],
+		},
+	],
 	effects_UNSTABLE: [persistAtom],
 });
 
