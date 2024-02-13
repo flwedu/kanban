@@ -1,5 +1,5 @@
 import { NotepadText, Tags } from "lucide-react";
-import React from "react";
+import React, { ReactElement } from "react";
 import { useRecoilState } from "recoil";
 import { useCardDrag } from "../../hooks/useCardDrag.ts";
 import { CardSelectorById } from "../../state/Cards.ts";
@@ -11,7 +11,15 @@ type CardProps = {
 	order: number;
 };
 
-export default function Card({ id, order }: CardProps) {
+/**
+ * Renders a card component.
+ *
+ * @param {CardProps} props - The props for the card component.
+ * @param {number} props.id - The unique identifier for the card.
+ * @param {number} props.order - The order of the card.
+ * @returns {ReactElement|null} The rendered card component, or null if the card is not available.
+ */
+export default function Card({ id, order }: CardProps): ReactElement | null {
 	const [editingHeader, setEditingHeader] = React.useState(false);
 	const [card, setCard] = useRecoilState(CardSelectorById(id));
 	const [{ isDragging }, dragRef] = useCardDrag({ card, order });

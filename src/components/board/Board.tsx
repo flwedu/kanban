@@ -1,5 +1,5 @@
 import { Plus, Settings } from "lucide-react";
-import React from "react";
+import React, { ReactElement } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useCardDrop } from "../../hooks/useCardDrop.ts";
 import { useModalState } from "../../hooks/useModalState.ts";
@@ -18,9 +18,17 @@ type BoardProps = {
 	order: number;
 };
 
-export default function Board({ id }: BoardProps) {
+/**
+ * Renders a board with its title, cards, and settings button.
+ *
+ * @param {object} BoardProps - The props for the Board component.
+ * @param {string} BoardProps.id - The ID of the board.
+ *
+ * @returns {ReactElement | null} - The rendered Board component.
+ */
+export default function Board({ id }: BoardProps): ReactElement | null {
 	const [editing, setEditing] = React.useState(false);
-	const { open } = useModalState("board");
+	const [, { open }] = useModalState("board");
 	const setCards = useSetRecoilState(CardsAtom);
 	const [board, setBoard] = useRecoilState(BoardSelectorById(id));
 	const [, dropRef] = useCardDrop({
@@ -72,7 +80,7 @@ export default function Board({ id }: BoardProps) {
 					return (
 						<>
 							<Card key={cardId} id={cardId} order={order} />
-							<DropLocation key={order + 1} boardId={id} order={order + 1} />
+							<DropLocation key={cardId} boardId={id} order={order + 1} />
 						</>
 					);
 				})}

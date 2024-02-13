@@ -9,6 +9,17 @@ type UseCardDnDParams = {
 	order: number;
 };
 
+/**
+ * Draggable card hook for handling card drag and drop.
+ *
+ * @param {Object} params - The parameters object.
+ * @param {Object} params.card - The card that is being dragged.
+ * @param {number} params.order - The current order of the card.
+ *
+ * @throws {Error} If `card` parameter is missing.
+ *
+ * @returns The drag object with drag and drop functionality.
+ */
 export function useCardDrag({ card, order: oldOrder }: UseCardDnDParams) {
 	if (!card) {
 		throw new Error("card is required for useCardDnD");

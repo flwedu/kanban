@@ -7,6 +7,14 @@ type UseBoardDropParams = {
 	};
 };
 
+/**
+ * Custom hook for handling card drop events.
+ *
+ * @param {Object} params - Parameters for the card drop hook.
+ * @param {Function} params.dropInfoGetter - A function that returns the drop information.
+ *
+ * @return An object containing the collected drop information.
+ */
 export function useCardDrop({ dropInfoGetter }: UseBoardDropParams) {
 	return useDrop(
 		() => ({

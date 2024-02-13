@@ -1,5 +1,5 @@
 import { Check, Trash, X } from "lucide-react";
-import { useRef } from "react";
+import { ReactElement, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { useModalState } from "../../hooks/useModalState";
 import { BoardSelectorById } from "../../state/Board";
@@ -12,8 +12,16 @@ interface BoardConfigModalProps {
 	onRemoveBoard: (boardId: string) => void;
 }
 
-export function BoardConfigModal({ onRemoveBoard }: BoardConfigModalProps) {
-	const { isOpen, dataId, close } = useModalState("board");
+/**
+ * Renders a modal for configuring a board.
+ *
+ * @param {Object} props - The component props.
+ * @param {Function} props.onRemoveBoard - The callback function to remove the board.
+ *
+ * @returns {ReactElement} The rendered modal component.
+ */
+export function BoardConfigModal({ onRemoveBoard }: BoardConfigModalProps): ReactElement {
+	const [{ isOpen, dataId }, { close }] = useModalState("board");
 	const [boardState, setBoardState] = useRecoilState(BoardSelectorById(dataId ?? ""));
 	const formRef = useRef<HTMLFormElement>(null);
 
@@ -42,7 +50,7 @@ export function BoardConfigModal({ onRemoveBoard }: BoardConfigModalProps) {
 		close();
 	};
 
-	if (!isOpen) return null;
+	if (!isOpen) return <></>;
 
 	return (
 		<BaseModal

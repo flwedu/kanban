@@ -1,10 +1,20 @@
 import { colorsRef } from "../theme/colorsRef.ts";
 
-const availableColors = colorsRef.colors;
-const colorEntries = Object.entries(availableColors).filter(([key]) => key !== "white" && key !== "black");
+const colorsScales = ["400", "500", "600"] as const;
+const colorValues = Object.values(colorsRef);
 
-export function getRandomColor() {
-	const randomIndex = Math.floor(Math.random() * colorEntries.length);
-	const [colorName, colorValue] = colorEntries[randomIndex];
-	return { colorName, colorValue };
+function getRandomColorScale() {
+	return colorsScales[Math.floor(Math.random() * colorsScales.length)];
+}
+
+/**
+ * Generates a random color.
+ *
+ * @returns {string} A random color value.
+ */
+export function getRandomColor(): string {
+	const randomIndex = Math.floor(Math.random() * colorValues.length);
+	const colorValue = colorValues[randomIndex];
+	const scale = getRandomColorScale();
+	return colorValue[scale];
 }
