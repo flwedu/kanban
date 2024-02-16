@@ -1,12 +1,9 @@
-import { readableColor } from "polished";
+import { darken, readableColor } from "polished";
 import { styled } from "styled-components";
-import { Bordered } from "../common/Bordered.styles.tsx";
 
 export const StyledBoard = styled.div<{
 	$color?: string;
 }>`
-	${Bordered};
-
 	padding: 0 1rem 1rem;
 	margin-bottom: 16px;
 	height: 30rem;
@@ -15,7 +12,15 @@ export const StyledBoard = styled.div<{
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
-	background-color: ${({ theme }) => theme.colors.container[0]};
+	background: rgba(255, 255, 255, 0.3);
+	backdrop-filter: blur(3px);
+	-webkit-backdrop-filter: blur(3px);
+	border-radius: ${({ theme }) => theme.borderRadius.xl};
+	border: solid 1px ${({ theme }) => theme.colors.outline};
+
+	&:hover {
+		border-color: ${({ theme }) => darken(0.15, theme.colors.outline)};
+	}
 `;
 
 export const BoardHeader = styled.div<{

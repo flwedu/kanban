@@ -1,14 +1,18 @@
-import { styled } from "styled-components";
+import { darken } from "polished";
+import { css, styled } from "styled-components";
 
 export const Header = styled.nav`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 0 1rem;
-	background-color: ${({ theme }) => theme.colors.primary};
+	${({ theme: { colors } }) => css`
+		background: linear-gradient(to bottom, ${colors.primary}, ${darken(0.05, colors.primary)});
+	`};
+
 	color: #ffffff;
 	width: 100%;
-	height: 6rem;
+	height: 4rem;
 	margin-bottom: ${({ theme }) => theme.spacing.md};
 
 	h1 {
