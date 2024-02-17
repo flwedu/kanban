@@ -1,8 +1,6 @@
 import React, { ReactElement, useRef, useState } from "react";
 import { BaseModal } from "../components/modals/BaseModal.tsx";
 
-export interface UseNotificationModalProps {}
-
 export type ShowConfirmDialogParams = {
 	title: string;
 	message: string;
