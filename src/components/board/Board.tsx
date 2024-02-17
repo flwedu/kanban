@@ -80,7 +80,7 @@ export default function Board({ id }: BoardProps): ReactElement | null {
 					return (
 						<>
 							<Card key={cardId} id={cardId} order={order} />
-							<DropLocation key={cardId} boardId={id} order={order + 1} />
+							<DropLocation key={`${cardId}_drop`} boardId={id} order={order + 1} />
 						</>
 					);
 				})}
