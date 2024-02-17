@@ -1,10 +1,8 @@
-import { useCallback } from "react";
-import { useRecoilCallback, useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilCallback, useRecoilValue } from "recoil";
 import { BoardType } from "../interface/Board.ts";
 import { BoardsAtom, BoardSelectorById } from "../state/Board.ts";
 import { CardsAtom } from "../state/Cards.ts";
 import { createBoard } from "../useCases/board/createBoard.ts";
-import { storeBoard } from "../useCases/board/storeBoard.ts";
 
 type UseBoardsReturn = [
 	BoardType[],
@@ -27,21 +25,27 @@ type UseBoardsReturn = [
  * ]}
  */
 export function useBoards(): UseBoardsReturn {
-	const [boards, setBoards] = useRecoilState(BoardsAtom);
-	const setCards = useSetRecoilState(CardsAtom);
+	const boards = useRecoilValue(BoardsAtom);
 
-	const addBoard = useCallback(() => {
-		const newBoard = createBoard({});
-		storeBoard(setBoards, newBoard);
-		return { boardId: newBoard.id, newOrder: -1 };
-	}, [setBoards]);
+	const addBoard = useRecoilCallback(
+		({ set }) =>
+			() => {
+				const newBoard = createBoard({});
+				set(BoardsAtom, (currVal) => [...currVal, newBoard]);
+				return { boardId: newBoard.id, newOrder: -1 };
+			},
+		[],
+	);
 
-	const deleteBoard = useCallback(
-		(boardId: string) => {
-			setBoards((currVal) => currVal.filter((board) => board.id !== boardId));
-			setCards((currVal) => currVal.filter((card) => card.boardId !== boardId));
-		},
-		[setBoards, setCards],
+	const deleteBoard = useRecoilCallback(
+		({ transact_UNSTABLE: transact }) =>
+			(boardId: string) => {
+				transact(({ set }) => {
+					set(BoardsAtom, (currVal) => currVal.filter((board) => board.id !== boardId));
+					set(CardsAtom, (currVal) => currVal.filter((card) => card.boardId !== boardId));
+				});
+			},
+		[],
 	);
 
 	const updateBoard = useRecoilCallback(
