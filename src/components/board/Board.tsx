@@ -1,5 +1,5 @@
 import { Plus, Settings } from "lucide-react";
-import React, { ReactElement } from "react";
+import React, { Fragment, ReactElement } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useCardDrop } from "../../hooks/useCardDrop.ts";
 import { useModalState } from "../../hooks/useModalState.ts";
@@ -75,13 +75,13 @@ export default function Board({ id }: BoardProps): ReactElement | null {
 				<Button onClick={addCard} size="md">
 					<Plus size={16} /> Add card
 				</Button>
-				<DropLocation key={0} boardId={id} order={0} />
+				<DropLocation boardId={id} order={0} />
 				{board.cards.map((cardId, order) => {
 					return (
-						<>
+						<Fragment key={`${cardId}_fragment`}>
 							<Card key={cardId} id={cardId} order={order} />
 							<DropLocation key={`${cardId}_drop`} boardId={id} order={order + 1} />
-						</>
+						</Fragment>
 					);
 				})}
 			</BoardBody>
