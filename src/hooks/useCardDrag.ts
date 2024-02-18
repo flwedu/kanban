@@ -1,8 +1,8 @@
 import { useDrag } from "react-dnd";
 import { useRecoilCallback } from "recoil";
 import { CardType } from "../interface/Card.ts";
-import { BoardSelectorById } from "../state/Board.ts";
-import { CardSelectorById } from "../state/Cards.ts";
+import { BoardSelectorById, BoardsAtom } from "../state/Board.ts";
+import { CardsAtom } from "../state/Cards.ts";
 
 type UseCardDnDParams = {
 	card: CardType | undefined;
@@ -26,11 +26,11 @@ export function useCardDrag({ card, order: oldOrder }: UseCardDnDParams) {
 	}
 
 	const moveCard = useRecoilCallback(
-		({ set }) =>
-			async (boardId: string, newOrder: number) => {
+		({ set, transact_UNSTABLE: transact }) =>
+			async (newBoardId: string, newOrder: number) => {
 				// If the card is dropped in the same board, we only need to update the order
-				if (card.boardId === boardId) {
-					set(BoardSelectorById(boardId), (board) => {
+				if (card.boardId === newBoardId) {
+					set(BoardSelectorById(newBoardId), (board) => {
 						if (!board) return board;
 						const newCards = [...board.cards];
 						newCards.splice(oldOrder, 1);
@@ -46,30 +46,44 @@ export function useCardDrag({ card, order: oldOrder }: UseCardDnDParams) {
 					return;
 				}
 				// If the card is dropped in a different board, we need to:
-				// 1. Remove the card from the old board
-				set(BoardSelectorById(card.boardId), (board) => {
-					if (!board) return board;
-					const newCards = [...board.cards];
-					newCards.splice(oldOrder, 1);
-					return { ...board, cards: newCards };
-				});
-				// 2. Add the card to the new board
-				set(BoardSelectorById(boardId), (board) => {
-					if (!board) return board;
-					const newCards = [...board.cards];
-					// if order === -1, it means the card should be moved to the end of the list
-					if (newOrder === -1) {
-						newCards.push(card.id);
-						return { ...board, cards: newCards };
-					}
-					// Otherwise, we insert the card at the new position
-					newCards.splice(newOrder, 0, card.id);
-					return { ...board, cards: newCards };
-				});
-				// 3. Update the card's boardId
-				set(CardSelectorById(card.id), (oldCard) => {
-					if (!oldCard) return oldCard;
-					return { ...oldCard, boardId };
+				transact(({ set }) => {
+					// Update boards
+					set(BoardsAtom, (currVal) => {
+						const newBoards = [...currVal];
+						// 1. Remove the card from the old board
+						const cardOldBoardIndex = newBoards.findIndex((b) => b.id === card.boardId);
+						if (cardOldBoardIndex > -1) {
+							const cardOldBoard = newBoards[cardOldBoardIndex];
+							const cards = [...cardOldBoard.cards];
+							cards.splice(oldOrder, 1);
+							newBoards[cardOldBoardIndex] = { ...cardOldBoard, cards };
+						}
+						// 2. Add the card to the new board
+						const cardNewBoardIndex = newBoards.findIndex((b) => b.id === newBoardId);
+						if (cardNewBoardIndex > -1) {
+							const cardNewBoard = newBoards[cardNewBoardIndex];
+							const cards = [...cardNewBoard.cards];
+							// if order === -1, it means the card should be moved to the end of the list
+							if (newOrder === -1) {
+								cards.push(card.id);
+							} else {
+								// Otherwise, we insert the card at the new position
+								cards.splice(newOrder, 0, card.id);
+							}
+							newBoards[cardNewBoardIndex] = { ...cardNewBoard, cards };
+						}
+						return newBoards;
+					});
+					// Update the card's boardId
+					set(CardsAtom, (currVal) => {
+						const newCards = [...currVal];
+						const updatedCardIndex = newCards.findIndex((c) => c.id === card.id);
+						const updatedCard = newCards[updatedCardIndex];
+
+						if (!updatedCard) return currVal;
+						newCards[updatedCardIndex] = { ...updatedCard, boardId: newBoardId };
+						return newCards;
+					});
 				});
 			},
 		[card.id],
