@@ -1,20 +1,20 @@
+import { Button, Card, Group, Input, Popover, Stack } from "@mantine/core";
 import { Plus, Settings } from "lucide-react";
-import React, { Fragment, ReactElement } from "react";
+import React, { Fragment, ReactElement, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useCardDrop } from "../../hooks/useCardDrop.ts";
-import { useModalState } from "../../hooks/useModalState.ts";
 import { BoardType } from "../../interface/Board.ts";
 import { BoardSelectorById } from "../../state/Board.ts";
 import { CardsAtom } from "../../state/Cards.ts";
 import { createCard } from "../../useCases/card/createCard.ts";
 import { storeCard } from "../../useCases/card/storeCard.ts";
-import Card from "../card/Card.tsx";
-import { Button } from "../common/Button.tsx";
+import EditableCard from "../card/EditableCard.tsx";
 import { DropLocation } from "../droppable/DropLocation.tsx";
-import { BoardBody, BoardHeader, StyledBoard } from "./Board.styles.tsx";
+import { BoardConfigPopoverContent } from "../modals/BoardConfig.tsx";
 
 type BoardProps = {
 	id: BoardType["id"];
+	onRemoveBoard: (boardId: BoardType["id"]) => void;
 	order: number;
 };
 
@@ -26,9 +26,8 @@ type BoardProps = {
  *
  * @returns {ReactElement | null} - The rendered Board component.
  */
-export default function Board({ id }: BoardProps): ReactElement | null {
-	const [editing, setEditing] = React.useState(false);
-	const [, { open }] = useModalState("board");
+export default function Board({ id, onRemoveBoard }: BoardProps): ReactElement | null {
+	const [isOpenConfig, setIsOpenConfig] = useState(false);
 	const setCards = useSetRecoilState(CardsAtom);
 	const [board, setBoard] = useRecoilState(BoardSelectorById(id));
 	const [, dropRef] = useCardDrop({
@@ -39,8 +38,12 @@ export default function Board({ id }: BoardProps): ReactElement | null {
 		return null;
 	}
 
-	const onClickSettings = () => {
-		open(id);
+	const onOpenConfigs = () => {
+		setIsOpenConfig(true);
+	};
+
+	const onCloseConfings = () => {
+		setIsOpenConfig(false);
 	};
 
 	const addCard = () => {
@@ -56,35 +59,46 @@ export default function Board({ id }: BoardProps): ReactElement | null {
 		const title = e.target.value?.trim();
 		const newBoard = { ...board, title };
 		setBoard(newBoard);
-		setEditing(false);
 	};
 
 	return (
-		<StyledBoard ref={dropRef}>
-			<BoardHeader $color={board.color}>
-				{editing ? (
-					<input type="text" defaultValue={board.title} onBlur={onHeaderInputBlur} autoFocus />
-				) : (
-					<h2 onClick={() => setEditing(true)}>{board.title}</h2>
-				)}
-				<Button onClick={onClickSettings} size="sm" data-hidden-without-hover>
-					<Settings size={16} />
-				</Button>
-			</BoardHeader>
-			<BoardBody>
-				<Button onClick={addCard} size="md">
+		<Card w={250} h={500} ref={dropRef} shadow="sm" p="md" radius="md" withBorder>
+			<Card.Section>
+				<Group justify="space-between" px="md" py="sm" wrap="nowrap">
+					<Input m={0} fw={600} variant="unstyled" defaultValue={board.title} onBlur={onHeaderInputBlur} />
+					<Popover opened={isOpenConfig} onChange={setIsOpenConfig} position="bottom" withArrow shadow="md">
+						<Popover.Target>
+							<Button onClick={onOpenConfigs} size="compact-sm" color="indigo" variant="transparent">
+								<Settings size={20} />
+							</Button>
+						</Popover.Target>
+						<Popover.Dropdown>
+							<BoardConfigPopoverContent
+								boardId={id}
+								onClose={onCloseConfings}
+								onRemoveBoard={() => {
+									onCloseConfings();
+									onRemoveBoard(id);
+								}}
+							/>
+						</Popover.Dropdown>
+					</Popover>
+				</Group>
+			</Card.Section>
+			<Stack gap={1} justify="flex-start" align="center" p="sm">
+				<Button onClick={addCard} color="indigo" variant="outline">
 					<Plus size={16} /> Add card
 				</Button>
 				<DropLocation boardId={id} order={0} />
 				{board.cards.map((cardId, order) => {
 					return (
 						<Fragment key={`${cardId}_fragment`}>
-							<Card key={cardId} id={cardId} order={order} />
+							<EditableCard key={cardId} id={cardId} order={order} />
 							<DropLocation key={`${cardId}_drop`} boardId={id} order={order + 1} />
 						</Fragment>
 					);
 				})}
-			</BoardBody>
-		</StyledBoard>
+			</Stack>
+		</Card>
 	);
 }

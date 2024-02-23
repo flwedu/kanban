@@ -24,10 +24,6 @@ export const GlobalStyles = createGlobalStyle`
 		margin: 0;
 		display: flex;
 		place-items: start;
-		color: ${({ theme }) => theme.colors.text};
-		font-family: ${({ theme }) => theme.fontFamily.body};
-		background-color: ${({ theme }) => theme.colors.background};
-		background-image: radial-gradient(${({ theme }) => theme.colors.primary} 1px, ${({ theme }) => theme.colors.background} 1px);
 		background-size: 20px 20px;
 	}
 `;

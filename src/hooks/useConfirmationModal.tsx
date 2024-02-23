@@ -61,13 +61,17 @@ export function useConfirmationModal(): UseConfirmationModalReturn {
 		handleOpen();
 	};
 
-	const ModalElement = !open ? (
-		<></>
-	) : (
-		<BaseModal open={open} title={titleRef.current} footerButtons={footerButtonsRef.current ?? []}>
-			{messageRef.current}
-		</BaseModal>
-	);
-
-	return [() => ModalElement, { showConfirmDialog }];
+	return [
+		() => (
+			<BaseModal
+				opened={open}
+				onClose={handleClose}
+				title={titleRef.current}
+				footerButtons={footerButtonsRef.current ?? []}
+			>
+				{messageRef.current}
+			</BaseModal>
+		),
+		{ showConfirmDialog },
+	];
 }

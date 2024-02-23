@@ -1,15 +1,16 @@
+import { Button, ColorPicker, Group, Stack } from "@mantine/core";
 import { Check, Trash, X } from "lucide-react";
-import { ReactElement, useRef } from "react";
+import { ReactElement, useState } from "react";
 import { useRecoilState } from "recoil";
-import { useModalState } from "../../hooks/useModalState";
 import { BoardSelectorById } from "../../state/Board";
-import { Button } from "../common/Button.tsx";
-import { ColorPicker } from "../common/ColorPicker.tsx";
-import { FormRow } from "../common/Form.styles.tsx";
-import { BaseModal } from "./BaseModal.tsx";
+import { colorsRef } from "../../theme/colorsRef.ts";
+
+const colorOptions = Object.values(colorsRef).map((c) => c["500"]);
 
 interface BoardConfigModalProps {
-	onRemoveBoard: (boardId: string) => void;
+	boardId: string;
+	onClose: () => void;
+	onRemoveBoard: () => void;
 }
 
 /**
@@ -17,66 +18,53 @@ interface BoardConfigModalProps {
  *
  * @param {Object} props - The component props.
  * @param {Function} props.onRemoveBoard - The callback function to remove the board.
+ * @param {string} props.boardId - The ID of the board.
+ * @param {Function} props.onClose - The callback function to close the modal.
  *
  * @returns {ReactElement} The rendered modal component.
  */
-export function BoardConfigModal({ onRemoveBoard }: BoardConfigModalProps): ReactElement {
-	const [{ isOpen, dataId }, { close }] = useModalState("board");
-	const [boardState, setBoardState] = useRecoilState(BoardSelectorById(dataId ?? ""));
-	const formRef = useRef<HTMLFormElement>(null);
+export function BoardConfigPopoverContent({ onRemoveBoard, boardId, onClose }: BoardConfigModalProps): ReactElement {
+	const [boardState, setBoardState] = useRecoilState(BoardSelectorById(boardId));
+	const [formState, setFormState] = useState({
+		color: boardState?.color,
+	});
 
 	const onClickSave = () => {
-		if (!formRef?.current) return;
-		const formData = new FormData(formRef.current);
-		const color = formData.get("color");
+		const color = formState["color"];
 		if (!boardState) return;
 		setBoardState((currVal) => {
 			if (!currVal) return currVal;
 			return {
 				...currVal,
-				color: color as string,
+				color,
 			};
 		});
-		close();
+		onClose();
 	};
 
-	const onClickRemove = () => {
-		if (!dataId) return;
-		onRemoveBoard(dataId);
-		close();
+	const onChangeColor = (color: string) => {
+		setFormState({ ...formState, color });
 	};
-
-	const onClickCancel = () => {
-		close();
-	};
-
-	if (!isOpen) return <></>;
 
 	return (
-		<BaseModal
-			open={isOpen}
-			title="Board Configuration"
-			footerButtons={[
-				<Button success onClick={onClickSave}>
-					<Check />
-					Save
-				</Button>,
-				<Button onClick={onClickCancel} secondary>
-					<X />
-					Cancel
-				</Button>,
-			]}
-		>
-			<form ref={formRef}>
-				<FormRow>
-					<ColorPicker name="color" defaultValue={boardState?.color} />
-				</FormRow>
-				<FormRow>
-					<Button danger onClick={onClickRemove}>
-						<Trash /> Remove Board
-					</Button>
-				</FormRow>
-			</form>
-		</BaseModal>
+		<Stack>
+			<ColorPicker
+				format="hex"
+				swatches={colorOptions}
+				onChange={onChangeColor}
+				value={formState.color}
+			/>
+			<Button onClick={onRemoveBoard} color="red">
+				<Trash /> Remove Board
+			</Button>
+			<Group>
+				<Button onClick={onClickSave} color="green">
+					<Check /> Save
+				</Button>
+				<Button onClick={onClose} color="gray">
+					<X /> Cancel
+				</Button>
+			</Group>
+		</Stack>
 	);
 }
