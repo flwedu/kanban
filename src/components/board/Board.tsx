@@ -101,7 +101,7 @@ export default function Board({ id, onRemoveBoard }: BoardProps): ReactElement |
 					</Popover>
 				</Group>
 			</Card.Section>
-			<Stack gap={1} justify="flex-start" align="center" p="sm">
+			<Stack gap={4} justify="flex-start" align="center" p="sm">
 				<Button onClick={addCard} color="indigo" variant="outline">
 					<Plus size={16} /> Add card
 				</Button>
