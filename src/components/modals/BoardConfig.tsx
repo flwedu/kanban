@@ -1,4 +1,4 @@
-import { Button, ColorPicker, Group, Stack } from "@mantine/core";
+import { Button, ColorPicker, Divider, Group, Stack, Text } from "@mantine/core";
 import { Check, Trash, X } from "lucide-react";
 import { ReactElement, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -48,16 +48,22 @@ export function BoardConfigPopoverContent({ onRemoveBoard, boardId, onClose }: B
 
 	return (
 		<Stack>
+			<Text>Board Color:</Text>
+			<div style={{ width: "100%", height: "2rem", background: formState.color, borderRadius: 4 }} />
 			<ColorPicker
 				format="hex"
 				swatches={colorOptions}
 				onChange={onChangeColor}
 				value={formState.color}
+				withPicker={false}
 			/>
+			<Divider />
+			<Text>Danger zone</Text>
 			<Button onClick={onRemoveBoard} color="red">
 				<Trash /> Remove Board
 			</Button>
-			<Group>
+			<Divider />
+			<Group justify="space-between">
 				<Button onClick={onClickSave} color="green">
 					<Check /> Save
 				</Button>

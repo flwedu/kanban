@@ -1,4 +1,4 @@
-import { Button, Card, Group, Input, Popover, Stack } from "@mantine/core";
+import { Button, Card, darken, Group, Input, Popover, Stack } from "@mantine/core";
 import { Plus, Settings } from "lucide-react";
 import React, { Fragment, ReactElement, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -38,11 +38,13 @@ export default function Board({ id, onRemoveBoard }: BoardProps): ReactElement |
 		return null;
 	}
 
+	const inputColor = darken(board.color ?? "gray", 0.8);
+
 	const onOpenConfigs = () => {
 		setIsOpenConfig(true);
 	};
 
-	const onCloseConfings = () => {
+	const onCloseConfigs = () => {
 		setIsOpenConfig(false);
 	};
 
@@ -64,20 +66,34 @@ export default function Board({ id, onRemoveBoard }: BoardProps): ReactElement |
 	return (
 		<Card w={250} h={500} ref={dropRef} shadow="sm" p="md" radius="md" withBorder>
 			<Card.Section>
-				<Group justify="space-between" px="md" py="sm" wrap="nowrap">
-					<Input m={0} fw={600} variant="unstyled" defaultValue={board.title} onBlur={onHeaderInputBlur} />
+				<Group justify="space-between" px="md" py="sm" wrap="nowrap" style={{ background: board.color }}>
+					<Input
+						m={0}
+						fw={600}
+						variant="unstyled"
+						defaultValue={board.title}
+						onBlur={onHeaderInputBlur}
+						style={{
+							"--mantine-color-text": inputColor,
+						}}
+					/>
 					<Popover opened={isOpenConfig} onChange={setIsOpenConfig} position="bottom" withArrow shadow="md">
 						<Popover.Target>
-							<Button onClick={onOpenConfigs} size="compact-sm" color="indigo" variant="transparent">
+							<Button
+								onClick={onOpenConfigs}
+								size="compact-sm"
+								variant="subtle"
+								color={darken(board.color ?? "gray", 0.3)}
+							>
 								<Settings size={20} />
 							</Button>
 						</Popover.Target>
 						<Popover.Dropdown>
 							<BoardConfigPopoverContent
 								boardId={id}
-								onClose={onCloseConfings}
+								onClose={onCloseConfigs}
 								onRemoveBoard={() => {
-									onCloseConfings();
+									onCloseConfigs();
 									onRemoveBoard(id);
 								}}
 							/>
