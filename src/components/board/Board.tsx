@@ -64,7 +64,7 @@ export default function Board({ id, onRemoveBoard }: BoardProps): ReactElement |
 	};
 
 	return (
-		<Card w={250} h={500} ref={dropRef} shadow="sm" p="md" radius="md" withBorder>
+		<Card w={250} h={500} flex="0 0 250px" ref={dropRef} shadow="sm" p="md" radius="md" withBorder>
 			<Card.Section>
 				<Group justify="space-between" px="md" py="sm" wrap="nowrap" style={{ background: board.color }}>
 					<Input

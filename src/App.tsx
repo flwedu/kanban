@@ -17,8 +17,10 @@ function App() {
 		dropInfoGetter: addBoard,
 	});
 	const [ConfirmModal, { showConfirmDialog }] = useConfirmationModal();
-	const [generalConfigIsOpened, { closeGeneralConfigs, openGeneralConfigs, onResetAllBoards, setGeneralConfigIsOpened }] =
-		useGeneralConfigs();
+	const [
+		generalConfigIsOpened,
+		{ closeGeneralConfigs, openGeneralConfigs, onResetAllBoards, setGeneralConfigIsOpened },
+	] = useGeneralConfigs();
 
 	function onRemoveBoard(id: string) {
 		showConfirmDialog({
@@ -95,7 +97,7 @@ function App() {
 					</Group>
 				</AppShell.Header>
 				<AppShell.Main m="lg">
-					<Group>
+					<Group mx="auto" style={{ overflowX: "auto" }} wrap="nowrap" grow preventGrowOverflow={false}>
 						{boards.map((board, order) => {
 							return <Board key={board.id} id={board.id} order={order} onRemoveBoard={onRemoveBoard} />;
 						})}
