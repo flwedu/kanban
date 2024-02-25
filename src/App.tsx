@@ -1,13 +1,15 @@
-import { AppShell, Button, Group, MantineProvider, Title } from "@mantine/core";
+import { AppShell, Button, Group, MantineProvider, Popover, Title } from "@mantine/core";
 import "@mantine/core/styles.css";
-import { Plus, Trash, X } from "lucide-react";
+import { Plus, Settings, Trash, X } from "lucide-react";
 import Board from "./components/board/Board.tsx";
 import { EmptyBoard } from "./components/board/EmptyBoard.tsx";
 import { StyledDropLocation } from "./components/droppable/DropLocation.styles.tsx";
 import { ThemeSwitch } from "./components/misc/ThemeSwitch.tsx";
+import { GeneralConfigPopoverContent } from "./components/modals/GeneralConfig.tsx";
 import { useBoards } from "./hooks/useBoards.ts";
 import { useCardDrop } from "./hooks/useCardDrop.ts";
 import { useConfirmationModal } from "./hooks/useConfirmationModal.tsx";
+import { useGeneralConfigs } from "./hooks/useGeneralConfigs.ts";
 
 function App() {
 	const [boards, { addBoard, deleteBoard }] = useBoards();
@@ -15,6 +17,8 @@ function App() {
 		dropInfoGetter: addBoard,
 	});
 	const [ConfirmModal, { showConfirmDialog }] = useConfirmationModal();
+	const [generalConfigIsOpened, { closeGeneralConfigs, openGeneralConfigs, onResetAllBoards, setGeneralConfigIsOpened }] =
+		useGeneralConfigs();
 
 	function onRemoveBoard(id: string) {
 		showConfirmDialog({
@@ -35,6 +39,25 @@ function App() {
 		});
 	}
 
+	function onClickResetAllButton() {
+		showConfirmDialog({
+			title: "Are you sure?",
+			message: "This action cannot be undone.",
+			okButton: (
+				<Button color="red">
+					<Trash />
+					Reset All
+				</Button>
+			),
+			cancelButton: (
+				<Button color="gray">
+					<X /> Cancel
+				</Button>
+			),
+			onClickOkButton: onResetAllBoards,
+		});
+	}
+
 	const Content =
 		isOver && canDrop ? (
 			<StyledDropLocation className="hovering" />
@@ -50,7 +73,25 @@ function App() {
 				<AppShell.Header>
 					<Group justify="space-between" px="lg" align="center">
 						<Title>Kanban Board</Title>
-						<ThemeSwitch />
+						<Group>
+							<Popover
+								opened={generalConfigIsOpened}
+								onChange={setGeneralConfigIsOpened}
+								position="bottom"
+								withArrow
+								shadow="md"
+							>
+								<Popover.Target>
+									<Button onClick={openGeneralConfigs} size="compact-sm" variant="subtle">
+										<Settings size={20} />
+									</Button>
+								</Popover.Target>
+								<Popover.Dropdown>
+									<GeneralConfigPopoverContent onClickResetAll={onClickResetAllButton} onClose={closeGeneralConfigs} />
+								</Popover.Dropdown>
+								<ThemeSwitch />
+							</Popover>
+						</Group>
 					</Group>
 				</AppShell.Header>
 				<AppShell.Main m="lg">
