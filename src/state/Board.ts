@@ -57,13 +57,3 @@ export const BoardSelectorById = selectorFamily<BoardType | undefined, string>({
 			set(BoardsAtom, newBoards);
 		},
 });
-
-export const BoardCardsSelectorById = selectorFamily<string[], string>({
-	key: "BoardCardsSelectorById",
-	get:
-		(id) =>
-		({ get }) => {
-			const board = get(BoardSelectorById(id));
-			return board?.cards || [];
-		},
-});

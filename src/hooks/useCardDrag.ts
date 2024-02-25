@@ -1,7 +1,7 @@
 import { useDrag } from "react-dnd";
 import { useRecoilCallback } from "recoil";
 import { CardType } from "../interface/Card.ts";
-import { BoardSelectorById, BoardsAtom } from "../state/Board.ts";
+import { BoardsAtom, BoardSelectorById } from "../state/Board.ts";
 import { CardsAtom } from "../state/Cards.ts";
 
 type UseCardDnDParams = {
