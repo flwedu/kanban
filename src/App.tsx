@@ -68,7 +68,7 @@ function App() {
 		);
 
 	return (
-		<MantineProvider>
+		<MantineProvider defaultColorScheme="auto">
 			<AppShell header={{ height: 50 }}>
 				<AppShell.Header>
 					<Group justify="space-between" px="lg" align="center">
